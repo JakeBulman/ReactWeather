@@ -1,50 +1,63 @@
 var React = require('react');
 var WeatherInput = require('WeatherInput');
 var WeatherOutput = require('WeatherOutput');
+var ErrorModal = require('ErrorModal');
 var openWeatherMap = require('openWeatherMap');
 
 var Weather = React.createClass({
-  getInitialState: function(){
-    return{
+  getInitialState: function () {
+    return {
       isLoading: false
     }
   },
-  handleSearch: function(location) {
+  handleSearch: function (location) {
     var that = this;
 
-    this.setState({isLoading: true});
+    this.setState({
+      isLoading: true,
+      errorMessage: undefined
+    });
 
-    openWeatherMap.getTemp(location).then(function (temp){
+    openWeatherMap.getTemp(location).then(function (temp) {
+      that.setState({
+        location: location,
+        temp: temp,
+        isLoading: false
+      });
+    }, function (e) {
       that.setState({
         isLoading: false,
-        location: location,
-        temp: temp
+        errorMessage: e.message
       });
-    }, function (errorMessage){
-      that.setState({
-          isLoading: false
-      });
-      alert(errorMessage)
     });
   },
-  render: function(){
-    var {isLoading, temp, location} = this.state;
+  render: function () {
+    var {isLoading, temp, location, errorMessage} = this.state;
 
-    function renderMessage() {
+    function renderMessage () {
       if (isLoading) {
-        return <h3>Fetching weather...</h3>;
-      } else if (temp && location){
-        return <WeatherOutput temp={temp} location={location}/>
+        return <h3 className="text-center">Fetching weather...</h3>;
+      } else if (temp && location) {
+        return <WeatherMessage temp={temp} location={location}/>;
       }
     }
 
-    return(
+    function renderError () {
+      if (typeof errorMessage === 'string') {
+        return (
+          <ErrorModal/>
+        )
+      }
+    }
+
+    return (
       <div>
-        <h3>Get Weather</h3>
-        <WeatherInput onSearch={this.handleSearch}/>
+        <h1 className="text-center">Get Weather</h1>
+        <WeatherForm onSearch={this.handleSearch}/>
         {renderMessage()}
+        {renderError()}
       </div>
-    );
+    )
   }
 });
 
