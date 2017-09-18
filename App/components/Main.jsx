@@ -1,8 +1,8 @@
 var React = require('react');
-var Nav = require('Nav')
+var Nav = require('Nav');
 
 var Main = (props) => {
-  return(
+  return (
     <div>
       <Nav/>
       <div className="row">

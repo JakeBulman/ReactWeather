@@ -1,6 +1,6 @@
 var React = require('react');
-var WeatherInput = require('WeatherInput');
-var WeatherOutput = require('WeatherOutput');
+var WeatherForm = require('WeatherForm');
+var WeatherMessage = require('WeatherMessage');
 var ErrorModal = require('ErrorModal');
 var openWeatherMap = require('openWeatherMap');
 

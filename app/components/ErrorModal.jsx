@@ -1,15 +1,15 @@
 var React = require('react');
 
-var ErrorModal = React.CreateClass({
-  componentDidMount: function() {
+var ErrorModal = React.createClass({
+  componentDidMount: function () {
     var modal = new Foundation.Reveal($('#error-modal'));
     modal.open();
   },
-  render: function() {
-    return(
+  render: function () {
+    return (
       <div id="error-modal" className="reveal tiny text-center" data-reveal="">
         <h4>Some Title</h4>
-        <p>Our Error Message</p>
+        <p>Our error message!</p>
         <p>
           <button className="button hollow" data-close="">
             Okay
@@ -20,4 +20,4 @@ var ErrorModal = React.CreateClass({
   }
 });
 
-module.exports = ErrorModal
+module.exports = ErrorModal;
